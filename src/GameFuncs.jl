@@ -8,10 +8,10 @@ end
 function StartGame(; Ratio::Real = 1.5)
     Flag = false
     PixelXNumber = trunc(Int64, 600 * Ratio)
-    PixelYNumber = trunc(Int64, 700 * Ratio)
+    PixelYNumber = trunc(Int64, 670 * Ratio)
 
     Canvas = @GtkCanvas
-    Label = GtkLabel("")
+    Label = GtkLabel("Start")
     Window = GtkWindow("", PixelXNumber, PixelYNumber)
     Hbox = GtkBox(:v)
     set_gtk_property!(Window, :resizable, false)
@@ -19,12 +19,17 @@ function StartGame(; Ratio::Real = 1.5)
     push!(Hbox, Canvas)
     push!(Hbox, Label)
 
+    sc = GAccessor.style_context(Label)
+    pr = CssProviderLeaf(data = "#Status {font-size: $(15*Ratio)px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: white;
+    background: #242424;}")
+    push!(sc, StyleProvider(pr), PixelXNumber)
+
+    set_gtk_property!(Label, :name, "Status")
     set_gtk_property!(Canvas, "width-request", PixelXNumber)
     set_gtk_property!(Canvas, "height-request", PixelXNumber)
-    sc = GAccessor.style_context(Label)
-    pr = CssProviderLeaf(data = "#Status {background: #7FB8CA;}")
-    push!(sc, StyleProvider(pr), PixelYNumber)
-    set_gtk_property!(Label, :name, "Status")
     set_gtk_property!(Hbox, :fill, Canvas, true)
     set_gtk_property!(Hbox, :expand, Label, true)
 

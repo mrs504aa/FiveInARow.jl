@@ -12,7 +12,7 @@
 
     These examples are very useful to learn Julia with GUI.
 
-    May the thanks to [goropikari](https://github.com/goropikari).
+    Many thanks to [goropikari](https://github.com/goropikari).
 
 * How to play
   

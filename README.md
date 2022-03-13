@@ -1,7 +1,7 @@
 # FiveInARow.jl
 * Introduction
     
-    Five in a row game with GUI, written in Julia with Gtk.jl. 
+    Five in a row game with GUI, written in Julia with Gtk.jl and Graphics.jl. 
     <p align="center">
     <img src="figs/example.png" alt="drawing" width="400"/>
     </p>

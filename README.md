@@ -20,6 +20,5 @@
     * Run the script ```Test.jl```.
 
 * To do list
-  
-    1. Game status in the window. Current version the game status is shown in the REPL.
-    2. A Windows style frame.
+
+    1. Maybe a Windows style frame.

@@ -5,9 +5,8 @@ function GameInitialize!(Window::GtkWindowLeaf, Canvas::GtkCanvas, Label::GtkLab
     showall(Window)
 end
 
-function StartGame()
+function StartGame(; Ratio::Real = 1.5)
     Flag = false
-    Ratio = 1.5
     PixelXNumber = trunc(Int64, 600 * Ratio)
     PixelYNumber = trunc(Int64, 700 * Ratio)
 

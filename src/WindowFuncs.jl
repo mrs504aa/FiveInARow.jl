@@ -53,7 +53,7 @@ end
 
 function LabelUpdate!(Label::GtkLabelLeaf, BoardTable::Board)
     S1 = "CurrentTurn: $(BoardTable.CurrentTurn)\n"
-    (BoardTable.CurrentPlayer==-1) ? (CurrentPlayer = "Black") : (CurrentPlayer = "White")
+    (BoardTable.CurrentPlayer==1) ? (CurrentPlayer = "Black") : (CurrentPlayer = "White")
     S2 = "CurrentPlayer: $(CurrentPlayer)\n"
     GAccessor.text(Label, join([S1, S2]))
 end

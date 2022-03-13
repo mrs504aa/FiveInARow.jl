@@ -49,15 +49,12 @@ function StartGame()
             if BoardTable.Table[X, Y] == 0
                 BoardTable.Table[X, Y] = BoardTable.CurrentPlayer
                 WindowUpdate!(Canvas, BoardTable)
-                LabelUpdate!(Label, BoardTable)
                 Flag = BoardCheckWin(BoardTable)
                 if !Flag
-                    # @show BoardTable.CurrentTurn, BoardTable.CurrentPlayer
                     BoardTable.CurrentTurn += 1
                     BoardTable.CurrentPlayer = -BoardTable.CurrentPlayer
-                else
-                    println("Player win!")
                 end
+                LabelUpdate!(Label, BoardTable)
             end
         end
     end

@@ -42,6 +42,11 @@ function WindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
             if BoardTable.Table[X, Y] != 0
                 Ind = BoardTable.Table[X, Y]
                 (Ind == -1) ? (Ind = 2) : ()
+
+                set_source_rgb(CTX, 0.5, 0.5, 0.5)
+                arc(CTX, (X - 1) * Space + R, (Y - 1) * Space + R, 0.8 * R, 0, 2pi)
+                fill(CTX)
+
                 set_source_rgb(CTX, C[Ind], C[Ind], C[Ind])
                 arc(CTX, (X - 1) * Space + R, (Y - 1) * Space + R, 0.75 * R, 0, 2pi)
                 fill(CTX)
@@ -52,8 +57,8 @@ function WindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
 end
 
 function LabelUpdate!(Label::GtkLabelLeaf, BoardTable::Board)
-    S1 = "CurrentTurn: $(BoardTable.CurrentTurn)\n"
+    S1 = "Current Turn: $(BoardTable.CurrentTurn)\n"
     (BoardTable.CurrentPlayer==1) ? (CurrentPlayer = "Black") : (CurrentPlayer = "White")
-    S2 = "CurrentPlayer: $(CurrentPlayer)\n"
+    S2 = "Current Player: $(CurrentPlayer)\n"
     GAccessor.text(Label, join([S1, S2]))
 end

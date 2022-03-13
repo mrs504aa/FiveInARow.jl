@@ -1,7 +1,7 @@
 name = "FiveInARow"
 uuid = "1e82495e-855f-44a5-88bf-c0230c9e3ed8"
 authors = ["mrs504aa <mrs504aa@hotmail.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 Graphics = "a2bd30eb-e257-5431-a919-1863eab51364"

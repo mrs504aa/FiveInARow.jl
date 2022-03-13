@@ -1,5 +1,5 @@
 using Graphics
-using Gtk
+using Gtk, Gtk.ShortNames
 
 mutable struct Board
     Table::Matrix{Int64}

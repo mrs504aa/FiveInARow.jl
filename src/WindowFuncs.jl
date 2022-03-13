@@ -15,7 +15,7 @@ function WindowInitialize!(Canvas::GtkCanvas)
             move_to(CTX, x * W / N, 0)
             line_to(CTX, x * W / N, H)
         end
-        for y in 1:(N-1)
+        for y in 1:(N)
             move_to(CTX, 0, y * W / N)
             line_to(CTX, W, y * W / N)
         end
@@ -49,4 +49,11 @@ function WindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
         end
         reveal(widget)
     end
+end
+
+function LabelUpdate!(Label::GtkLabelLeaf, BoardTable::Board)
+    S1 = "CurrentTurn: $(BoardTable.CurrentTurn)\n"
+    (BoardTable.CurrentPlayer==-1) ? (CurrentPlayer = "Black") : (CurrentPlayer = "White")
+    S2 = "CurrentPlayer: $(CurrentPlayer)\n"
+    GAccessor.text(Label, join([S1, S2]))
 end

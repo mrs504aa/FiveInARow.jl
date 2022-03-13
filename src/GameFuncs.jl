@@ -1,22 +1,40 @@
-function GameInitialize!(Canvas::GtkCanvas, BoardTable::Board)
+function GameInitialize!(Window::GtkWindowLeaf, Canvas::GtkCanvas, Label::GtkLabelLeaf, BoardTable::Board)
     BoardInitialize!(BoardTable)
     WindowInitialize!(Canvas)
+    LabelUpdate!(Label, BoardTable)
+    showall(Window)
 end
 
 function StartGame()
     Flag = false
-    PixelNumber = 700
+    Ratio = 1.5
+    PixelXNumber = trunc(Int64, 600 * Ratio)
+    PixelYNumber = trunc(Int64, 700 * Ratio)
+
     Canvas = @GtkCanvas
-    Window = GtkWindow("", PixelNumber, PixelNumber)
-    push!(Window, Canvas)
+    Label = GtkLabel("")
+    Window = GtkWindow("", PixelXNumber, PixelYNumber)
+    Hbox = GtkBox(:v)
+    set_gtk_property!(Window, :resizable, false)
+    push!(Window, Hbox)
+    push!(Hbox, Canvas)
+    push!(Hbox, Label)
+
+    set_gtk_property!(Canvas, "width-request", PixelXNumber)
+    set_gtk_property!(Canvas, "height-request", PixelXNumber)
+    sc = GAccessor.style_context(Label)
+    pr = CssProviderLeaf(data = "#Status {background: #7FB8CA;}")
+    push!(sc, StyleProvider(pr), PixelYNumber)
+    set_gtk_property!(Label, :name, "Status")
+    set_gtk_property!(Hbox, :fill, Canvas, true)
+    set_gtk_property!(Hbox, :expand, Label, true)
 
     BoardTable = Board()
-    GameInitialize!(Canvas, BoardTable)
-
+    GameInitialize!(Window, Canvas, Label, BoardTable)
 
     Canvas.mouse.button1press = @guarded (widget, event) -> begin
         if Flag
-            GameInitialize!(Canvas, BoardTable)
+            GameInitialize!(Window, Canvas, Label, BoardTable)
             Flag = false
         else
             N = 15
@@ -31,9 +49,10 @@ function StartGame()
             if BoardTable.Table[X, Y] == 0
                 BoardTable.Table[X, Y] = BoardTable.CurrentPlayer
                 WindowUpdate!(Canvas, BoardTable)
+                LabelUpdate!(Label, BoardTable)
                 Flag = BoardCheckWin(BoardTable)
                 if !Flag
-                    @show BoardTable.CurrentTurn, BoardTable.CurrentPlayer
+                    # @show BoardTable.CurrentTurn, BoardTable.CurrentPlayer
                     BoardTable.CurrentTurn += 1
                     BoardTable.CurrentPlayer = -BoardTable.CurrentPlayer
                 else

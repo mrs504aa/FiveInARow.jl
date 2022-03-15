@@ -21,4 +21,4 @@
 
 * To do list
 
-    1. Maybe a Windows style frame.
+    1. Add a Blink.jl version.

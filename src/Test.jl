@@ -3,4 +3,4 @@ include("BoardFuncs.jl")
 include("GtkWindowFuncs.jl")
 include("GtkGameFuncs.jl")
 
-GtkStartGame(Ratio = 2)
+GtkStartGame(Ratio = 1.5)

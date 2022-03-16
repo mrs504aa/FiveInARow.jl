@@ -1,11 +1,11 @@
-function GameInitialize!(Window::GtkWindowLeaf, Canvas::GtkCanvas, Label::GtkLabelLeaf, BoardTable::Board)
+function GtkGameInitialize!(Window::GtkWindowLeaf, Canvas::GtkCanvas, Label::GtkLabelLeaf, BoardTable::Board)
     BoardInitialize!(BoardTable)
-    WindowInitialize!(Canvas)
-    LabelUpdate!(Label, BoardTable)
+    GtkWindowInitialize!(Canvas)
+    GtkLabelUpdate!(Label, BoardTable)
     showall(Window)
 end
 
-function StartGame(; Ratio::Real = 1.5)
+function GtkStartGame(; Ratio::Real = 1.5)
     Flag = false
     PixelXNumber = trunc(Int64, 600 * Ratio)
     PixelYNumber = trunc(Int64, 670 * Ratio)
@@ -34,11 +34,11 @@ function StartGame(; Ratio::Real = 1.5)
     set_gtk_property!(Hbox, :expand, Label, true)
 
     BoardTable = Board()
-    GameInitialize!(Window, Canvas, Label, BoardTable)
+    GtkGameInitialize!(Window, Canvas, Label, BoardTable)
 
     Canvas.mouse.button1press = @guarded (widget, event) -> begin
         if Flag
-            GameInitialize!(Window, Canvas, Label, BoardTable)
+            GtkGameInitialize!(Window, Canvas, Label, BoardTable)
             Flag = false
         else
             N = 15
@@ -52,13 +52,13 @@ function StartGame(; Ratio::Real = 1.5)
 
             if BoardTable.Table[X, Y] == 0
                 BoardTable.Table[X, Y] = BoardTable.CurrentPlayer
-                WindowUpdate!(Canvas, BoardTable)
+                GtkWindowUpdate!(Canvas, BoardTable)
                 Flag = BoardCheckWin(BoardTable)
                 if !Flag
                     BoardTable.CurrentTurn += 1
                     BoardTable.CurrentPlayer = -BoardTable.CurrentPlayer
                 end
-                LabelUpdate!(Label, BoardTable)
+                GtkLabelUpdate!(Label, BoardTable)
             end
         end
     end

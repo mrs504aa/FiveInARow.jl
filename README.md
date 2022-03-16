@@ -16,7 +16,7 @@
 
 * How to play
   
-    * Use this package and just ```StartGame()```.
+    * Use this package and just ```GtkStartGame()```.
     * Run the script ```Test.jl```.
 
 * To do list

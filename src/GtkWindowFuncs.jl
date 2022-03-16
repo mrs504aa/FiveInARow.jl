@@ -1,4 +1,4 @@
-function WindowInitialize!(Canvas::GtkCanvas)
+function GtkWindowInitialize!(Canvas::GtkCanvas)
     @guarded draw(Canvas) do widget
         N = 15
         CTX = getgc(Canvas)
@@ -26,7 +26,7 @@ function WindowInitialize!(Canvas::GtkCanvas)
     show(Canvas)
 end
 
-function WindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
+function GtkWindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
     @guarded draw(Canvas) do widget
         N = 15
         CTX = getgc(Canvas)
@@ -56,7 +56,7 @@ function WindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
     end
 end
 
-function LabelUpdate!(Label::GtkLabelLeaf, BoardTable::Board)
+function GtkLabelUpdate!(Label::GtkLabelLeaf, BoardTable::Board)
     S1 = "Current Turn: $(BoardTable.CurrentTurn)\n"
     (BoardTable.CurrentPlayer==1) ? (CurrentPlayer = "Black") : (CurrentPlayer = "White")
     S2 = "Current Player: $(CurrentPlayer)\n"

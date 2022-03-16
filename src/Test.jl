@@ -1,6 +1,6 @@
 include("UsingAndDefs.jl")
 include("BoardFuncs.jl")
-include("WindowFuncs.jl")
-include("GameFuncs.jl")
+include("GtkWindowFuncs.jl")
+include("GtkGameFuncs.jl")
 
-StartGame(Ratio = 2)
+GtkStartGame(Ratio = 2)

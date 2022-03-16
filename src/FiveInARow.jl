@@ -2,14 +2,9 @@ module FiveInARow
 
 include("UsingAndDefs.jl")
 include("BoardFuncs.jl")
-include("WindowFuncs.jl")
-include("GameFuncs.jl")
+include("GtkWindowFuncs.jl")
+include("GtkGameFuncs.jl")
 
-function julia_main()::Cint
-    StartGame()
-    return 0 
-  end
-
-export StartGame
+export GtkStartGame
 
 end 

@@ -21,4 +21,4 @@
 
 * To do list
 
-    1. Add a Blink.jl version.
+    1. Add a qt version.

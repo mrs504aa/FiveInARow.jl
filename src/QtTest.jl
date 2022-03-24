@@ -6,13 +6,15 @@ using Observables
 using ColorTypes
 import CxxWrap
 
-const QmlFile = "GtGame.qml"
+const QmlFile = "QtGame.qml"
 
 Ratio = 1.5
 
 WindowWidth = Observable(trunc(Int64, 600 * Ratio))
 WindowHeight = Observable(trunc(Int64, 700 * Ratio))
 
-loadqml(QmlFile, parameters=JuliaPropertyMap("WindowWidth" => WindowWidth, "WindowHeight" => WindowHeight))
+loadqml(QmlFile,
+    parameters=JuliaPropertyMap("WindowWidth" => WindowWidth,
+        "WindowHeight" => WindowHeight))
 
 exec()

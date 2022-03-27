@@ -1,3 +1,11 @@
+mutable struct Board
+    Table::Matrix{Int64}
+    CurrentTurn::Int64
+    CurrentPlayer::Int64
+    FirstPlayer::Int64
+    Board() = new()
+end
+
 function BoardInitialize!(BoardTable::Board)
     N = 15
     Table = zeros(Int64, 15, 15)

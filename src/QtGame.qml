@@ -16,44 +16,36 @@ ApplicationWindow {
     minimumWidth: width
 
     title: qsTr("FiveInARow")
-  
+
     JuliaCanvas {
+        anchors.fill: parent
+        id: board
         Layout.minimumWidth: width
         Layout.minimumHeight: width
-
-        Rectangle {
-            color: "#F5CB77"
-            width: Parameters.WindowWidth
-            height: Parameters.WindowWidth
-        }
-
-        Repeater {
-            model: 16
-            Rectangle {
-                color: "#000000"
-                y: Parameters.WindowWidth / 15 * index
-                width: Parameters.WindowWidth
-                height: Parameters.WindowWidth / 600
-            }
-        }
-
-        Repeater {
-            model: 16
-            Rectangle {
-                color: "#000000"
-                x: Parameters.WindowWidth / 15 * index
-                width: Parameters.WindowWidth / 600
-                height: Parameters.WindowWidth 
-            }
-        }
-
+        paintFunction: paint_cfunction
         MouseArea{
             anchors.fill: parent
-            onClicked: {
-                Position.PointerX = mouseX
-                Position.PointerY = mouseY
-                
-            }
+            id: mouseArea
+        }
+    }
+
+    Repeater {
+        model: 16
+        Rectangle {
+            color: "#000000"
+            y: Parameters.WindowWidth / 15 * index
+            width: Parameters.WindowWidth
+            height: Parameters.WindowWidth / 600
+        }
+    }
+
+    Repeater {
+        model: 16
+        Rectangle {
+            color: "#000000"
+            x: Parameters.WindowWidth / 15 * index
+            width: Parameters.WindowWidth / 600
+            height: Parameters.WindowWidth 
         }
     }
 
@@ -63,5 +55,12 @@ ApplicationWindow {
         height: Parameters.WindowHeight - Parameters.WindowWidth
         color: "#242424"
     }
-   
+
+    Connections {
+		target: mouseArea
+		function onClicked(mouse) { 
+                    Position.PointerX = mouse.x;
+                    Position.PointerY = mouse.y;
+                    board.update(); }
+	}
 }

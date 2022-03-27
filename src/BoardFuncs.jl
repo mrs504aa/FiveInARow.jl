@@ -3,6 +3,7 @@ mutable struct Board
     CurrentTurn::Int64
     CurrentPlayer::Int64
     FirstPlayer::Int64
+    RestartFlag::Bool
     Board() = new()
 end
 
@@ -16,6 +17,7 @@ function BoardInitialize!(BoardTable::Board)
     BoardTable.CurrentTurn = 1
     BoardTable.CurrentPlayer = 1
     BoardTable.FirstPlayer = 1
+    BoardTable.RestartFlag = true
     return BoardTable
 end
 

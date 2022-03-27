@@ -20,13 +20,15 @@ ApplicationWindow {
     JuliaCanvas {
         anchors.fill: parent
         id: board
-        Layout.minimumWidth: width
-        Layout.minimumHeight: width
+        width: parent.width
+        height: parent.width
         paintFunction: paint_cfunction
-        MouseArea{
-            anchors.fill: parent
-            id: mouseArea
-        }
+    }
+
+    MouseArea{
+        width: parent.width
+        height: parent.width
+        id: mouseArea
     }
 
     Repeater {

@@ -7,8 +7,8 @@ import org.julialang 1.0
 ApplicationWindow {
     visible: true
 
-    width: parameters.WindowWidth
-    height: parameters.WindowHeight
+    width: Parameters.WindowWidth
+    height: Parameters.WindowHeight
 
     maximumHeight: height
     maximumWidth: width
@@ -16,45 +16,52 @@ ApplicationWindow {
     minimumWidth: width
 
     title: qsTr("FiveInARow")
-    ColumnLayout {
-        anchors.fill: parent
+  
+    JuliaCanvas {
+        Layout.minimumWidth: width
+        Layout.minimumHeight: width
 
-        JuliaCanvas {
-                Layout.minimumWidth: width
-                Layout.minimumHeight: width
+        Rectangle {
+            color: "#F5CB77"
+            width: Parameters.WindowWidth
+            height: Parameters.WindowWidth
+        }
 
-                Rectangle {
-                    color: "#F5CB77"
-                    width: parameters.WindowWidth
-                    height: parameters.WindowWidth
-                }
-
-                Repeater {
-                    model: 16
-                    Rectangle {
-                        color: "#000000"
-                        y: parameters.WindowWidth / 15 * index
-                        width: parameters.WindowWidth
-                        height: parameters.WindowWidth / 600
-                    }
-                }
-
-                Repeater {
-                    model: 16
-                    Rectangle {
-                        color: "#000000"
-                        x: parameters.WindowWidth / 15 * index
-                        width: parameters.WindowWidth / 600
-                        height: parameters.WindowWidth 
-                    }
-                }
+        Repeater {
+            model: 16
+            Rectangle {
+                color: "#000000"
+                y: Parameters.WindowWidth / 15 * index
+                width: Parameters.WindowWidth
+                height: Parameters.WindowWidth / 600
             }
         }
 
-        Rectangle {
-            y: parameters.WindowWidth
-            width: parameters.WindowWidth
-            height: parameters.WindowHeight - parameters.WindowWidth
-            color: "#242424"
+        Repeater {
+            model: 16
+            Rectangle {
+                color: "#000000"
+                x: Parameters.WindowWidth / 15 * index
+                width: Parameters.WindowWidth / 600
+                height: Parameters.WindowWidth 
+            }
         }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                Position.PointerX = mouseX
+                Position.PointerY = mouseY
+                
+            }
+        }
+    }
+
+    Rectangle {
+        y: Parameters.WindowWidth
+        width: Parameters.WindowWidth
+        height: Parameters.WindowHeight - Parameters.WindowWidth
+        color: "#242424"
+    }
+   
 }

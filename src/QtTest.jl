@@ -50,6 +50,8 @@ function QtWindowUpdate(buffer::Array{UInt32,1}, width32::Int32, height32::Int32
         else
             BoardInitialize!(BoardTable)
         end
+    else
+        PaintBoard(buffer, BoardTable)
     end
     return
 end

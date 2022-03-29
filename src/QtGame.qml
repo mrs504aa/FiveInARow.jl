@@ -56,6 +56,18 @@ ApplicationWindow {
         width: Parameters.WindowWidth
         height: Parameters.WindowHeight - Parameters.WindowWidth
         color: "#242424"
+        Text {
+            id: myText
+            anchors.fill:parent
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            smooth: true
+            color: "#FFFFFF"
+            font.family: "sans-serif"
+            font.weight: Font.Bold;
+            font.pointSize: 15 * parent.width / 900
+            text: qsTr("Current Turn: %1\nCurrent Player: %2").arg(BoardTable.CurrentTurn).arg(BoardTable.CurrentPlayer)
+        }
     }
 
     Connections {
@@ -63,6 +75,7 @@ ApplicationWindow {
 		function onClicked(mouse) { 
                     Position.PointerX = mouse.x;
                     Position.PointerY = mouse.y;
-                    board.update(); }
+                    board.update();
+                    myText.update(); }
 	}
 }

@@ -1,23 +1,22 @@
 include("QtUsingAndDefs.jl")
 include("BoardFuncs.jl")
-# include("QtGameFuncs.jl")
 
-# QtStartGame(Ratio=1.5)
 
-Ratio = 1.5 
-BoardTable = Board()
-BoardInitialize!(BoardTable)
+Ratio = 1.5
 
 QmlFile = "QtGame.qml"
+
+BoardTable = Board()
+BoardInitialize!(BoardTable)
 
 WindowWidth = Observable(trunc(Int64, 600 * Ratio))
 WindowHeight = Observable(trunc(Int64, 670 * Ratio))
 PointerX = Observable(-600.0 * Ratio / 15)
 PointerY = Observable(-600.0 * Ratio / 15)
+CPlayer = Observable(0)
+CTurn = Observable(0)
 
-function QtWindowUpdate(buffer::Array{UInt32,1},
-    width32::Int32,
-    height32::Int32)
+function QtWindowUpdate(buffer::Array{UInt32,1}, width32::Int32, height32::Int32)
 
     width::Int = width32
     height::Int = height32
@@ -28,15 +27,26 @@ function QtWindowUpdate(buffer::Array{UInt32,1},
     Y = trunc(Int64, div(PointerY[], Space)) + 1
 
     if BoardTable.RestartFlag
+
         PaintBoard(buffer, BoardTable)
+        CTurn[] = BoardTable.CurrentTurn
+        CPlayer[] = BoardTable.CurrentPlayer
+
         BoardTable.RestartFlag = false
+
     elseif BoardTable.Table[X, Y] == 0
+
         BoardTable.Table[X, Y] = BoardTable.CurrentPlayer
         PaintBoard(buffer, BoardTable)
+
         Flag = BoardCheckWin(BoardTable)
+
         if !Flag
             BoardTable.CurrentTurn += 1
             BoardTable.CurrentPlayer = -BoardTable.CurrentPlayer
+
+            CTurn[] = BoardTable.CurrentTurn
+            CPlayer[] = BoardTable.CurrentPlayer + 3 * (BoardTable.CurrentPlayer == -1)
         else
             BoardInitialize!(BoardTable)
         end
@@ -83,6 +93,9 @@ loadqml(QmlFile,
     Position=JuliaPropertyMap(
         "PointerX" => PointerX,
         "PointerY" => PointerY),
+    BoardTable=JuliaPropertyMap(
+        "CurrentTurn" => CTurn,
+        "CurrentPlayer" => CPlayer),
     paint_cfunction=CxxWrap.@safe_cfunction(QtWindowUpdate, Cvoid,
         (Array{UInt32,1}, Int32, Int32)))
 

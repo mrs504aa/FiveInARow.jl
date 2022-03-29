@@ -18,7 +18,7 @@
   
     * Use this package and just ```GtkStartGame()```.
     * Run the script ```GtkTest.jl```.
-    * Run the script ```QtTest.jl```
+    * Run the script ```QtTest.jl```. There are some bugs when run the qt version on Linux.
 
 * To do list
 

@@ -1,10 +1,14 @@
 module FiveInARow
 
-include("GtkUsingAndDefs.jl")
 include("BoardFuncs.jl")
+
+include("GtkUsingAndDefs.jl")
 include("GtkWindowFuncs.jl")
 include("GtkGameFuncs.jl")
 
-export GtkStartGame
+include("QtUsingAndDefs.jl")
+include("QtGameFuncs.jl")
 
-end 
+export GtkStartGame, QtStartGame
+
+end

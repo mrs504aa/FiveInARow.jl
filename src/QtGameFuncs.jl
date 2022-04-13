@@ -12,9 +12,6 @@ Base.@kwdef mutable struct QtObservables
     CTurn = Observable(0)
 end
 
-ObCollection = QtObservables()
-QtBoardTable = Board()
-
 function QtWindowUpdate(buffer::Array{UInt32,1}, width32::Int32, height32::Int32)
     width::Int = width32
     height::Int = height32
@@ -86,29 +83,37 @@ function PaintBoard(buffer, QtBoardTable::Board)
     return
 end
 
-Ratio = 1.5
-QmlFile = "QtGame.qml"
+function QtStartGame(; Ratio::Real=1.5)
+    QmlFile = "QtGame.qml"
 
-BoardInitialize!(QtBoardTable)
+    global ObCollection = QtObservables()
+    global QtBoardTable = Board()
 
-ObCollection.WindowWidth = Observable(trunc(Int64, 600 * Ratio))
-ObCollection.WindowHeight = Observable(trunc(Int64, 670 * Ratio))
-ObCollection.PointerX = Observable(-600.0 * Ratio / 15)
-ObCollection.PointerY = Observable(-600.0 * Ratio / 15)
-ObCollection.CPlayer = Observable(0)
-ObCollection.CTurn = Observable(0)
+    BoardInitialize!(QtBoardTable)
 
-loadqml(QmlFile,
-    Parameters=JuliaPropertyMap(
-        "WindowWidth" => ObCollection.WindowWidth,
-        "WindowHeight" => ObCollection.WindowHeight),
-    Position=JuliaPropertyMap(
-        "PointerX" => ObCollection.PointerX,
-        "PointerY" => ObCollection.PointerY),
-    BoardTable=JuliaPropertyMap(
-        "CurrentTurn" => ObCollection.CTurn,
-        "CurrentPlayer" => ObCollection.CPlayer),
-    paint_cfunction=CxxWrap.@safe_cfunction(QtWindowUpdate, Cvoid,
-        (Array{UInt32,1}, Int32, Int32)))
+    ObCollection.WindowWidth = Observable(trunc(Int64, 600 * Ratio))
+    ObCollection.WindowHeight = Observable(trunc(Int64, 670 * Ratio))
+    ObCollection.PointerX = Observable(-600.0 * Ratio / 15)
+    ObCollection.PointerY = Observable(-600.0 * Ratio / 15)
+    ObCollection.CPlayer = Observable(0)
+    ObCollection.CTurn = Observable(0)
 
-exec()
+    loadqml(QmlFile,
+        Parameters=JuliaPropertyMap(
+            "WindowWidth" => ObCollection.WindowWidth,
+            "WindowHeight" => ObCollection.WindowHeight),
+        Position=JuliaPropertyMap(
+            "PointerX" => ObCollection.PointerX,
+            "PointerY" => ObCollection.PointerY),
+        BoardTable=JuliaPropertyMap(
+            "CurrentTurn" => ObCollection.CTurn,
+            "CurrentPlayer" => ObCollection.CPlayer),
+        paint_cfunction=CxxWrap.@safe_cfunction(QtWindowUpdate, Cvoid,
+            (Array{UInt32,1}, Int32, Int32)))
+
+    exec()
+end
+
+if basename(PROGRAM_FILE) == basename(@__FILE__)
+    QtStartGame()
+end

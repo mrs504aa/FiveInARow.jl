@@ -111,13 +111,8 @@ function QtStartGame(; Ratio::Real=1.5)
         paint_cfunction=CxxWrap.@safe_cfunction(QtWindowUpdate, Cvoid,
             (Array{UInt32,1}, Int32, Int32)))
 
-    if isinteractive()
-        @show 1 
-        exec()
-        readline()
-    else
-        exec()
-    end
+    
+    exec()
 end
 
 if basename(PROGRAM_FILE) == basename(@__FILE__)

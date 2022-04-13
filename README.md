@@ -17,7 +17,7 @@
 * How to play
   
     * Use this package and just ```GtkStartGame(;Ratio = 1.5)```.
-    * Use this package and just ```QtStartGame(;Ratio = 1.5)```.
+    * Use this package and just ```ENV["QSG_RENDER_LOOP"] = "basic";QtStartGame(;Ratio = 1.5)```.
     * Run the script ```GtkTest.jl```.
     * Run the script ```QtTest.jl```. 
     * There are some bugs when run the qt version on Linux.

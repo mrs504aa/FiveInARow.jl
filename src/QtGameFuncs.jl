@@ -84,7 +84,7 @@ function PaintBoard(buffer, QtBoardTable::Board)
 end
 
 function QtStartGame(; Ratio::Real=1.5)
-    QmlFile = "QtGame.qml"
+    QmlFile = join([dirname(@__FILE__), "/QtGame.qml"])
 
     global ObCollection = QtObservables()
     global QtBoardTable = Board()
@@ -111,7 +111,13 @@ function QtStartGame(; Ratio::Real=1.5)
         paint_cfunction=CxxWrap.@safe_cfunction(QtWindowUpdate, Cvoid,
             (Array{UInt32,1}, Int32, Int32)))
 
-    exec()
+    if isinteractive()
+        @show 1 
+        exec()
+        readline()
+    else
+        exec()
+    end
 end
 
 if basename(PROGRAM_FILE) == basename(@__FILE__)

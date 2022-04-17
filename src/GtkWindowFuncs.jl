@@ -2,8 +2,8 @@ function GtkWindowInitialize!(Canvas::GtkCanvas)
     @guarded draw(Canvas) do widget
         N = 15
         CTX = getgc(Canvas)
-        H = height(Canvas)
-        W = width(Canvas)
+        H = Gtk.ShortNames.height(Canvas)
+        W = Gtk.ShortNames.width(Canvas)
         space = H / N
         r = space / 2
 
@@ -30,8 +30,8 @@ function GtkWindowUpdate!(Canvas::GtkCanvas, BoardTable::Board)
     @guarded draw(Canvas) do widget
         N = 15
         CTX = getgc(Canvas)
-        H = height(Canvas)
-        W = width(Canvas)
+        H = Gtk.ShortNames.height(Canvas)
+        W = Gtk.ShortNames.width(Canvas)
         Space = H / N
         R = Space / 2
         C = zeros(Float64, 2)

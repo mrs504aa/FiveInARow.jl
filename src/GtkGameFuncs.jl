@@ -43,7 +43,7 @@ function GtkStartGame(; Ratio::Real = 1.5)
         else
             N = 15
             CTX = getgc(widget)
-            H = height(CTX)
+            H = Gtk.ShortNames.height(CTX)
             Space = H / N
 
             X, Y = Int(div(event.x, Space)), Int(div(event.y, Space))

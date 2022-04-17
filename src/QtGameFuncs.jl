@@ -12,10 +12,10 @@ Base.@kwdef mutable struct QtObservables
     CTurn = Observable(0)
 end
 
-function QtWindowUpdate(buffer::Array{UInt32,1}, width32::Int32, height32::Int32)
+function QtWindowUpdate(Buffer::Array{UInt32,1}, width32::Int32, height32::Int32)
     width::Int = width32
     height::Int = height32
-    buffer = reshape(buffer, width, height)
+    buffer = reshape(Buffer, width, height)
     buffer = reinterpret(ARGB32, buffer)
     Space = width / 15
     X = trunc(Int64, div(ObCollection.PointerX[], Space)) + 1
@@ -51,8 +51,8 @@ function QtWindowUpdate(buffer::Array{UInt32,1}, width32::Int32, height32::Int32
     return
 end
 
-function PaintBoard(buffer, QtBoardTable::Board)
-    width, height = size(buffer)
+function PaintBoard(Buffer, QtBoardTable::Board)
+    width, height = size(Buffer)
     Space = width / 15
     rad1 = (Space / 2 * 0.8)^2
     rad2 = (Space / 2 * 0.75)^2
@@ -63,7 +63,7 @@ function PaintBoard(buffer, QtBoardTable::Board)
             XIndex = trunc(Int64, div(x, Space)) + 1
             YIndex = trunc(Int64, div(y, Space)) + 1
 
-            buffer[x, y] = ARGB32(245 / 255, 203 / 255, 119 / 255, 1)
+            Buffer[x, y] = ARGB32(245 / 255, 203 / 255, 119 / 255, 1)
 
             if QtBoardTable.Table[XIndex, YIndex] != 0
                 Ind = QtBoardTable.Table[XIndex, YIndex]
@@ -73,9 +73,9 @@ function PaintBoard(buffer, QtBoardTable::Board)
                 center_y = (div(y, Space) + 0.5) * Space
 
                 if (x - center_x)^2 + (y - center_y)^2 < rad2
-                    buffer[x, y] = ARGB32(C[Ind], C[Ind], C[Ind], 1)
+                    Buffer[x, y] = ARGB32(C[Ind], C[Ind], C[Ind], 1)
                 elseif (x - center_x)^2 + (y - center_y)^2 < rad1
-                    buffer[x, y] = ARGB32(0.5, 0.5, 0.5, 1)
+                    Buffer[x, y] = ARGB32(0.5, 0.5, 0.5, 1)
                 end
             end
         end

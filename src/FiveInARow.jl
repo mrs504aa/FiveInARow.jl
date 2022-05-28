@@ -1,5 +1,9 @@
 module FiveInARow
 
+function __init__()
+    ENV["QSG_RENDER_LOOP"] = "basic"
+end
+
 include("BoardFuncs.jl")
 
 include("GtkUsingAndDefs.jl")
